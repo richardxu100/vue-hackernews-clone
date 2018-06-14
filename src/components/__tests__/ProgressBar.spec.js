@@ -27,6 +27,19 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.classes()).toContain('show')
   })
 
+  it('increments the width by 1% every 100ms when start is called', () => {
+    jest.useFakeTimers()
+    const wrapper = shallowMount(ProgressBar)
+    wrapper.vm.start()
+    jest.runTimersToTime(100)
+    expect(wrapper.element.style.width).toBe('1%')
+    jest.runTimersToTime(900)
+    expect(wrapper.element.style.width).toBe('10%')
+    jest.runTimersToTime(4000)
+    expect(wrapper.element.style.width).toBe('50%')
+    jest.useRealTimers()
+  })
+  
   it('sets the bar to 100% width when fail is called', () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.fail()
