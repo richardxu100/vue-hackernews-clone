@@ -39,6 +39,14 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.element.style.width).toBe('50%')
     jest.useRealTimers()
   })
+
+  it('clears _timer when finish is called', () => {
+    const clearIntervalSpy = jest.spyOn(window, 'clearInterval')
+    const wrapper = shallowMount(ProgressBar)
+    wrapper.vm.finish()
+    expect(clearIntervalSpy).toHaveBeenCalled()
+    clearIntervalSpy.mockRestore()
+  })
   
   it('sets the bar to 100% width when fail is called', () => {
     const wrapper = shallowMount(ProgressBar)
