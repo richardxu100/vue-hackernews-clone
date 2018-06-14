@@ -10,6 +10,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "firebase": "^5.0.4",
     "vue": "^2.5.16"
   },
   "devDependencies": {
@@ -30,8 +31,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
+      "plugin:vue/essential"
     ],
     "rules": {},
     "parserOptions": {
