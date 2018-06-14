@@ -7,7 +7,7 @@ Firebase.initializeApp({
 
 const api = Firebase.database().ref('/v0')
 
-function fetch (child) {
+function fetch(child) {
   const cache = api.cachedItems
   if (cache && cache.has(child)) {
     return Promise.resolve(cache.get(child))
@@ -24,25 +24,25 @@ function fetch (child) {
   }
 }
 
-export function fetchListData (type) {
+export function fetchListData(type) {
   return fetchIdsByType(type)
     .then((ids) => fetchItems(ids))
 }
 
-export function fetchIdsByType (type) {
-  return api.cachedIds && api.cachedIds[type]
-    ? Promise.resolve(api.cachedIds[type])
-    : fetch(`${type}stories`)
+export function fetchIdsByType(type) {
+  return api.cachedIds && api.cachedIds[type] ?
+    Promise.resolve(api.cachedIds[type]) :
+    fetch(`${type}stories`)
 }
 
-export function fetchItem (id) {
+export function fetchItem(id) {
   return fetch(`item/${id}`)
 }
 
-export function fetchItems (ids) {
+export function fetchItems(ids) {
   return Promise.all(ids.map(id => fetchItem(id)))
 }
 
-export function fetchUser (id) {
+export function fetchUser(id) {
   return fetch(`user/${id}`)
 }
