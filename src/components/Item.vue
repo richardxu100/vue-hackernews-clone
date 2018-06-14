@@ -1,8 +1,7 @@
 <template>
   <li class="news-item">
-    <!-- <a>{{ item.title }}</a>
-    {{ item.by }} {{ item.url }} {{ item.score }} -->
-    {{ item.url }}
+    <a :href="item.url">{{ item.title }}</a>
+    {{ item.by }} {{ item.score }}
   </li>
 </template>
 
