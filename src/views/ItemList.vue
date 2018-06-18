@@ -16,16 +16,15 @@ export default {
     this.loadItems()
   },
   methods: {
-    loadItems() {
+    async loadItems() {
       this.$bar.start()
-      fetchListData('top')
-        .then(items => {
-          this.displayItems = items
-          this.$bar.finish()
-        })
-        .catch(err => {
-          this.$bar.fail()
-        })
+      try {
+        const items = await fetchListData('top')
+        this.displayItems = items
+        this.$bar.finish()
+      } catch {
+        this.$bar.fail()
+      }
     }
   },
   data: () => ({

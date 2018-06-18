@@ -1,5 +1,5 @@
 export default {
-  displayItems() {
-    
+  displayItems(state) {
+    return state.items.slice(0, 20)
   }
 }
