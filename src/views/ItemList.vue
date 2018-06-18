@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { fetchListData } from '../api/api'
 import Item from '../components/Item.vue'
 
@@ -15,20 +16,23 @@ export default {
   beforeMount() {
     this.loadItems()
   },
+  computed: {
+    displayItems() {
+      return this.$store.getters.displayItems
+    }
+  },
   methods: {
+    ...mapActions(['fetchListData']),
     async loadItems() {
       this.$bar.start()
       try {
-        const items = await fetchListData('top')
-        this.displayItems = items
+        // dispatches fetchListData action
+        await this.fetchListData({type: 'top'})
         this.$bar.finish()
       } catch {
         this.$bar.fail()
       }
     }
-  },
-  data: () => ({
-    displayItems: []
-  })
+  }
 }
 </script>
