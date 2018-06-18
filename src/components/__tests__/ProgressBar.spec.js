@@ -1,4 +1,6 @@
-import { shallowMount } from '@vue/test-utils'
+import {
+  shallowMount
+} from '@vue/test-utils'
 import ProgressBar from '@/components/ProgressBar.vue'
 
 describe('ProgressBar.vue', () => {
@@ -12,12 +14,6 @@ describe('ProgressBar.vue', () => {
     wrapper.vm.finish()
     wrapper.vm.start()
     expect(wrapper.element.style.width).toBe('0%')
-  })
-
-  it('updates the width percent', () => {
-    const wrapper = shallowMount(ProgressBar)
-    wrapper.setData({ percent: 70 })
-    expect(wrapper.element.style.width).toBe('70%')
   })
 
   it('displays the bar when start is called', () => {
@@ -37,7 +33,7 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.element.style.width).toBe('10%')
     jest.runTimersToTime(4000)
     expect(wrapper.element.style.width).toBe('50%')
-    jest.useRealTimers()
+    jest.useRealTimers() // make sure to always include this
   })
 
   it('clears _timer when finish is called', () => {
@@ -47,7 +43,7 @@ describe('ProgressBar.vue', () => {
     expect(clearIntervalSpy).toHaveBeenCalled()
     clearIntervalSpy.mockRestore()
   })
-  
+
   it('sets the bar to 100% width when fail is called', () => {
     const wrapper = shallowMount(ProgressBar)
     wrapper.vm.fail()
@@ -68,4 +64,3 @@ describe('ProgressBar.vue', () => {
     expect(wrapper.classes()).not.toContain('show')
   })
 })
-
