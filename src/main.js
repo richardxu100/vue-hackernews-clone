@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Router from 'vue-router'
+import { sync } from 'vuex-router-sync'
 
 import App from './App'
 import ProgressBar from './components/ProgressBar'
@@ -13,6 +14,8 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store(storeConfig)
 const router = new Router(routerConfig)
+
+sync(store, router)
 
 const bar = new Vue(ProgressBar).$mount()
 Vue.prototype.$bar = bar
