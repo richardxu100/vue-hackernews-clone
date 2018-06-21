@@ -1,6 +1,15 @@
 <template>
   <div>
     <item :item="item" v-for="item in displayItems" :key="item.id" />
+    <router-link v-if="page > 1" :to="`/${type}/${page-1}`">
+      &lt; prev
+    </router-link>
+    <a v-else>&lt; prev</a>
+    <span>{{ page }}/{{ maxPage }}</span>
+    <router-link v-if="page < maxPage" :to="`/${type}/${page+1}`">
+      more &gt;
+    </router-link>
+    <a v-else>more &gt;</a>
   </div>
 </template>
 
@@ -13,12 +22,19 @@ export default {
   components: {
     Item
   },
+  props: ['type'],
   beforeMount() {
     this.loadItems()
   },
   computed: {
     displayItems() {
       return this.$store.getters.displayItems
+    },
+    page() {
+      return Number(this.$route.params.page) || 1
+    },
+    maxPage() {
+      return Math.ceil(this.$store.state.items.length / 20)
     }
   },
   methods: {
@@ -27,7 +43,10 @@ export default {
       this.$bar.start()
       try {
         // dispatches fetchListData action
-        await this.fetchListData({type: 'top'})
+        await this.fetchListData({type: this.type})
+        if (this.page < 0 || this.page > this.maxPage) {
+          this.$router.replace(`/${this.type}/1`)
+        }
         this.$bar.finish()
       } catch {
         this.$bar.fail()
